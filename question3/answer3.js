@@ -1,10 +1,25 @@
 function solution(relation) {
     let answer = 0;
-    let uniqueness = findUniqueness(relation);
+    let uniqueness = findUniqueness(relation); // like primary key
 
-    
+    let restRelation = [];
+    uniqueness.forEach(uniq => {
+        relation.forEach(element => {
+            let temp = [];
+            element.forEach((item, index) => {
+                if(index !== uniq) {
+                    temp.push(item);
+                }
+            });
+            restRelation.push(temp);
+        });
+    });
 
-    return uniqueness;
+    let minimality = findMinimality(restRelation);
+
+    answer = uniqueness.length + minimality.length;
+
+    return answer;
 };
 
 function findUniqueness(relation) {
@@ -34,6 +49,28 @@ function findUniqueness(relation) {
     })
 
     return temp;
+}
+
+function findMinimality(relation) {
+    let change = [];
+    for (let i = 0; i < relation[0].length-1; i++) {
+        for (let j = i+1; j < relation[0].length; j++) {
+            change.push([i,j])
+        }     
+    }
+
+    let result = [];
+
+    change.forEach((element) => {
+        let obj = {};
+        relation.forEach(item => {
+            obj[`${item[element[0]]}${item[element[1]]}`] = 1;
+        });
+        if (Object.keys(obj).length === relation.length) {
+            result.push(element);
+        }
+    });
+    return result;
 }
 
 let relation = [
