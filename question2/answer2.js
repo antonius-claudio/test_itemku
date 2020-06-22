@@ -1,5 +1,5 @@
 function solution(N, users) {
-    var answer = [];
+    let answer = [];
     let rates = [];
 
     for (let i = 0; i < N; i++) {
@@ -25,7 +25,7 @@ function solution(N, users) {
     });
 
     return answer;
-}
+};
 
 let N = 5;
 let users = [2,1,2,6,2,4,3,3];
